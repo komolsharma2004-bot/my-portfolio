@@ -1,4 +1,4 @@
-// Express import করা হয়েছে
+ // Express import করা হয়েছে
 const express = require("express");
 
 // SQLite database
@@ -11,7 +11,7 @@ const path = require("path");
 const app = express();
 
 // Port
-const PORT = 3000;
+const PORT = process.env.PORT || 3000; 
 
 // SQLite database তৈরি/খোলা
 const db = new Database("portfolio.db");

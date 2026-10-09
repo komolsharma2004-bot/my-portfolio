@@ -1,4 +1,4 @@
-// ========================================
+ // ========================================
 // Mobile Menu
 // ========================================
 
@@ -216,9 +216,8 @@ async function loadProjects() {
 
 loadProjects();
 
-
 // ========================================
-// Contact Form
+// Contact Form (Web3Forms)
 // ========================================
 
 const contactForm =
@@ -230,115 +229,70 @@ const formMessage =
 
 contactForm.addEventListener("submit", async (event) => {
 
-    // Page reload বন্ধ
     event.preventDefault();
-
 
     const submitButton =
         contactForm.querySelector(".submit-btn");
 
-
-    // Form data নেওয়া
-
     const formData =
         new FormData(contactForm);
 
-
     const data = {
-
+        access_key: "febf082c-eaac-460e-a53d-40a2640605de",
         name: formData.get("name"),
-
         email: formData.get("email"),
-
         subject: formData.get("subject"),
-
         message: formData.get("message")
-
     };
-
 
     try {
 
         submitButton.disabled = true;
-
-        submitButton.innerText =
-            "পাঠানো হচ্ছে...";
-
-
-        // Backend API-তে পাঠানো
+        submitButton.innerText = "পাঠানো হচ্ছে...";
 
         const response = await fetch(
-            "/api/contact",
+            "https://api.web3forms.com/submit",
             {
                 method: "POST",
-
                 headers: {
-                    "Content-Type":
-                        "application/json"
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
                 },
-
                 body: JSON.stringify(data)
             }
         );
 
+        const result = await response.json();
 
-        const result =
-            await response.json();
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                result.message ||
-                "Something went wrong"
-            );
-
+        if (!result.success) {
+            throw new Error("মেসেজ পাঠানো যায়নি।");
         }
 
-
-        // Success message
-
         formMessage.textContent =
-            result.message;
+            "আপনার মেসেজ সফলভাবে পাঠানো হয়েছে।";
 
-        formMessage.style.color =
-            "#16a34a";
-
-
-        // Form clear
+        formMessage.style.color = "#16a34a";
 
         contactForm.reset();
-
 
     } catch (error) {
 
         console.error(error);
 
-
         formMessage.textContent =
-            error.message ||
-            "মেসেজ পাঠানো যায়নি।";
+            "মেসেজ পাঠানো যায়নি। আবার চেষ্টা করুন।";
 
-
-        formMessage.style.color =
-            "#dc2626";
-
+        formMessage.style.color = "#dc2626";
 
     } finally {
 
         submitButton.disabled = false;
-
-        submitButton.innerText =
-            "মেসেজ পাঠান";
+        submitButton.innerText = "মেসেজ পাঠান";
 
     }
 
 });
-
-
-// ========================================
-// Scroll Reveal Animation
-// ========================================
+ 
 
 function observeRevealElements() {
 

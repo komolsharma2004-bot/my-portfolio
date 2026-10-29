@@ -40,7 +40,7 @@ db.prepare(`
         name TEXT NOT NULL,
         email TEXT NOT NULL,
         subject TEXT NOT NULL,
-        message TEXT NOT NULL,
+        message TEXT NOT NULL,rrrrrrrr
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
 `).run();
@@ -57,6 +57,15 @@ db.prepare(`
         demo TEXT
     )
 `).run();
+db.prepare(`
+  UPDATE projects
+  SET github = ?, demo = ?
+  WHERE title = ?
+`).run(
+  "https://github.com/komolsharma2004-bot/my-new-website",
+  "https://komolsharma2004-bot.github.io/my-new-website/",
+  "E-Commerce Website"
+);
 
 // ===============================
 // Default Projects
@@ -83,15 +92,15 @@ if (projectCount.count === 0) {
         "https://github.com/",
         "#"
     );
-
-    insertProject.run(
-        "E-Commerce Website",
-        "একটি responsive online shopping website interface।",
-        "HTML, CSS, JavaScript",
-        "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d",
-        "https://github.com/",
-        "#"
-    );
+insertProject.run(
+    "E-Commerce Website",
+    "একটি responsive online shopping website interface।",
+    "HTML, CSS, JavaScript",
+    "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d",
+    "https://github.com/komolsharma2004-bot/my-new-website",
+    "https://komolsharma2004-bot.github.io/my-new-website/"
+);
+ 
 
     insertProject.run(
         "Student Management System",
